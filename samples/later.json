@@ -1,0 +1,25 @@
+{
+  "case_id": "v6",
+  "revision": {
+    "block_id": "bench-42",
+    "revision_id": "R1",
+    "stations": ["S", "M", "T"],
+    "transmissions": [
+      {"id": "early", "source": "S", "target": "M", "opens": "1", "closes": "1", "duration": "1", "origin": "dispatch/20"},
+      {"id": "late", "source": "S", "target": "M", "opens": "5", "closes": "5", "duration": "1", "origin": "dispatch/21"},
+      {"id": "out", "source": "M", "target": "T", "opens": "7", "closes": "7", "duration": "1", "origin": "dispatch/22"}
+    ],
+    "custody_turns": [
+      {"id": "before-power-loss", "station": "M", "opens": "2", "closes": "3", "origin": "relay/50"},
+      {"id": "after-restart", "station": "M", "opens": "6", "closes": "8", "origin": "relay/51"}
+    ]
+  },
+  "query": {"source": "S", "destination": "T", "receipt_window": ["8", "8"]},
+  "expected": {
+    "arrival": "8",
+    "legs": [
+      {"id": "late", "departure": "5", "arrival": "6", "origin": "dispatch/21", "custody": null, "custody_origin": null},
+      {"id": "out", "departure": "7", "arrival": "8", "origin": "dispatch/22", "custody": "after-restart", "custody_origin": "relay/51"}
+    ]
+  }
+}

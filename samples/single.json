@@ -1,0 +1,23 @@
+{
+  "case_id": "v3",
+  "revision": {
+    "block_id": "bench-42",
+    "revision_id": "R1",
+    "stations": ["S", "M", "T"],
+    "transmissions": [
+      {"id": "in", "source": "S", "target": "M", "opens": "1", "closes": "1", "duration": "1", "origin": "dispatch/10"},
+      {"id": "out", "source": "M", "target": "T", "opens": "3", "closes": "3", "duration": "1", "origin": "dispatch/11"}
+    ],
+    "custody_turns": [
+      {"id": "steady", "station": "M", "opens": "2", "closes": "3", "origin": "relay/41"}
+    ]
+  },
+  "query": {"source": "S", "destination": "T", "receipt_window": ["3", "4"]},
+  "expected": {
+    "arrival": "4",
+    "legs": [
+      {"id": "in", "departure": "1", "arrival": "2", "origin": "dispatch/10", "custody": null, "custody_origin": null},
+      {"id": "out", "departure": "3", "arrival": "4", "origin": "dispatch/11", "custody": "steady", "custody_origin": "relay/41"}
+    ]
+  }
+}

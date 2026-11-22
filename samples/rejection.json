@@ -1,0 +1,26 @@
+{
+  "revision": {
+    "block_id": "bench-direct",
+    "revision_id": "R1",
+    "stations": ["S", "T"],
+    "transmissions": [
+      {"id": "early", "source": "S", "target": "T", "opens": "3", "closes": "3", "duration": "1", "origin": "dispatch/early"},
+      {"id": "late", "source": "S", "target": "T", "opens": "5", "closes": "5", "duration": "1", "origin": "dispatch/late"}
+    ],
+    "custody_turns": []
+  },
+  "cases": [
+    {
+      "case_id": "reject-at-five",
+      "query": {"source": "S", "destination": "T", "receipt_window": ["5", "5"]},
+      "expected": {"arrival": null, "legs": null}
+    },
+    {
+      "case_id": "receive-at-six",
+      "query": {"source": "S", "destination": "T", "receipt_window": ["6", "6"]},
+      "expected": {"arrival": "6", "legs": [
+        {"id": "late", "departure": "5", "arrival": "6", "origin": "dispatch/late", "custody": null, "custody_origin": null}
+      ]}
+    }
+  ]
+}
